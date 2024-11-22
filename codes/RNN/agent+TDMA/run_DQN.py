@@ -4,6 +4,8 @@ from tqdm import tqdm
 from environment import ENVIRONMENT
 from DQN_brain import DQN
 
+import os
+
 def return_action(action, n_actions=2):
     one_hot_vector = [0] * n_actions
     one_hot_vector[action] = 1
@@ -49,6 +51,8 @@ def main(M, E, F, B, gamma, alpha, idx, max_iter):
         if i > 100 and (i % 5 == 0):
             agent.learn()       # internally iterates default (prediction) model
         channel_state = next_channel_state
+
+    os.makedirs('rewards', exist_ok = True)
 
     with open(f'rewards/reward1_len{max_iter}_M{M}_E{E}_F{F}_B{B}_gamma{gamma}_alpha{alpha}_idx{idx}.txt', 'w') as my_agent:
         for i in agent_reward_list:
